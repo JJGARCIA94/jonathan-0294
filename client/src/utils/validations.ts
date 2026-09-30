@@ -64,3 +64,5 @@ export function validateRegister(form: RegisterForm): FieldErrors<RegisterForm> 
 export function hasErrors<T>(errors: FieldErrors<T>): boolean {
     return Object.values(errors).some(Boolean)
 }
+
+export const PASSWORD_HINT = `De ${PASSWORD_MIN} a ${PASSWORD_MAX} caracteres, con al menos una mayúscula, una minúscula y un número`
