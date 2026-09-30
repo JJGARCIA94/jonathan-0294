@@ -1,4 +1,4 @@
-import type { RegisterForm } from '../types/auth'
+import type { LoginForm, RegisterForm } from '../types/auth'
 
 export type FieldErrors<T> = Partial<Record<keyof T, string>>
 
@@ -58,6 +58,13 @@ export function validateRegister(form: RegisterForm): FieldErrors<RegisterForm> 
         email: validateEmail(form.email),
         password: validatePassword(form.password),
         confirmPassword: validatePasswordConfirmation(form.password, form.confirmPassword),
+    }
+}
+
+export function validateLogin(form: LoginForm): FieldErrors<LoginForm> {
+    return {
+        email: validateEmail(form.email),
+        password: form.password ? undefined : 'Escribe tu contraseña',
     }
 }
 

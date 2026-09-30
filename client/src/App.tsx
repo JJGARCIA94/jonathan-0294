@@ -1,24 +1,29 @@
-import { useState } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 
+import { ProtectedRoute, PublicOnlyRoute } from './guards/RouteGuards'
+import { AuthProvider } from './context/AuthProvider'
+import { DashboardPage } from './pages/DashboardPage'
+import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
-import type { User } from './types/auth'
 
 function App() {
-  const [user, setUser] = useState<User | null>(null)
-
   return (
-    <main className="min-vh-100 bg-body-tertiary py-5">
-      <div className="container">
-        <h1 className="text-center mb-4">Carreras de caracoles</h1>
-        {user ? (
-          <div className="alert alert-success text-center" role="status">
-            ¡Cuenta creada! Hola, {user.fullName}. Tu saldo es de ${user.balance}.
-          </div>
-        ) : (
-          <RegisterPage onRegistered={setUser} />
-        )}
-      </div>
-    </main>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<PublicOnlyRoute />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/registro" element={<RegisterPage />} />
+          </Route>
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
