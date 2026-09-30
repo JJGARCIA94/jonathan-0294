@@ -1,0 +1,11 @@
+# --- Dependencias (se recrean con `npm install` desde package-lock.json)
+node_modules/
+
+# --- Resultado de `npm run build` (client: Vite, server: tsc)
+dist/
+
+# --- Variables de entorno: pueden contener secretos.
+#     Solo se versiona la plantilla .env.example
+.env
+.env.*
+!.env.example
