@@ -11,3 +11,10 @@ export interface User {
 export interface Session {
     userId: string
 }
+
+export interface RegisterForm {
+    fullName: string
+    email: string
+    password: string
+    confirmPassword: string
+}
