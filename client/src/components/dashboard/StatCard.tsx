@@ -5,9 +5,10 @@ interface StatCardProps {
     value: ReactNode
     icon: string
     tone?: 'primary' | 'success' | 'danger'
+    children?: ReactNode
 }
 
-export function StatCard({ title, value, icon, tone = 'primary' }: StatCardProps) {
+export function StatCard({ title, value, icon, tone = 'primary', children }: StatCardProps) {
     return (
         <section className="card h-100 shadow-sm">
             <div className="card-body d-flex align-items-center gap-3">
@@ -15,6 +16,7 @@ export function StatCard({ title, value, icon, tone = 'primary' }: StatCardProps
                 <div>
                     <h2 className="h6 text-body-secondary mb-1">{title}</h2>
                     <p className="fs-4 fw-semibold mb-0">{value}</p>
+                    {children}
                 </div>
             </div>
         </section>

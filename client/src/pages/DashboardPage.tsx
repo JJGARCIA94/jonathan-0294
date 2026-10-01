@@ -1,10 +1,14 @@
+import { useState } from 'react'
 import { BetsDonutChart } from '../components/dashboard/BetsDonutChart'
+import { ChargeHistoryTable } from '../components/dashboard/ChargeHistoryTable'
 import { DashboardCard } from '../components/dashboard/DashboardCard'
 import { RaceResultsTable } from '../components/dashboard/RaceResultsTable'
 import { SnailWinsBarChart } from '../components/dashboard/SnailWinsBarChart'
 import { StatCard } from '../components/dashboard/StatCard'
+import { RechargeDialog } from '../components/recharge/RechargeDialog'
 import { RACES_PER_DAY } from '../constants/race'
 import { useAuth } from '../hooks/useAuth'
+import { useChargeHistory } from '../hooks/useChargeHistory'
 import { simulateRaceDay } from '../services/raceSimulation'
 import { formatCurrency } from '../utils/format'
 import { seedFromDate } from '../utils/random'
@@ -13,6 +17,8 @@ const raceDay = simulateRaceDay(seedFromDate(new Date()))
 
 export function DashboardPage() {
     const { user, logout } = useAuth()
+    const [isRechargeOpen, setIsRechargeOpen] = useState(false)
+    const { charges, reload: reloadCharges } = useChargeHistory(user?.id)
 
     if (!user) return null
 
@@ -36,7 +42,16 @@ export function DashboardPage() {
 
                 <div className="row g-3 mb-3">
                     <div className="col-12 col-md-4">
-                        <StatCard title="Saldo actual" value={formatCurrency(user.balance)} icon="bi-wallet2" />
+                        <StatCard title="Saldo actual" value={formatCurrency(user.balance)} icon="bi-wallet2">
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-sm mt-2"
+                                onClick={() => setIsRechargeOpen(true)}
+                            >
+                                <i className="bi bi-plus-lg me-1" aria-hidden="true" />
+                                Recargar saldo
+                            </button>
+                        </StatCard>
                     </div>
                     <div className="col-6 col-md-4">
                         <StatCard title="Apuestas ganadas" value={won} icon="bi-trophy" tone="success" />
@@ -59,10 +74,20 @@ export function DashboardPage() {
                     </div>
                 </div>
 
+                <div className="mb-3">
+                    <DashboardCard title="Últimas recargas">
+                        <ChargeHistoryTable charges={charges} />
+                    </DashboardCard>
+                </div>
+
                 <DashboardCard title="Resultados de las carreras">
                     <RaceResultsTable races={raceDay.races} />
                 </DashboardCard>
             </main>
+
+            {isRechargeOpen && (
+                <RechargeDialog onClose={() => setIsRechargeOpen(false)} onSettled={reloadCharges} />
+            )}
         </>
     )
 }
