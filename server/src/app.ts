@@ -1,16 +1,18 @@
 import cors from 'cors'
 import express, { type Express } from 'express'
-
 import { healthRouter } from './routes/health.js'
+import { snailpayRouter } from './routes/snailpay.js'
 
-// La app se construye aparte de index.ts para poder probarla con supertest sin abrir un puerto.
+
 export function createApp(): Express {
   const app = express()
 
-  app.use(cors())
-  app.use(express.json())
+  app.disable('x-powered-by')
+
+  app.use(cors({ origin: process.env.CLIENT_ORIGIN ?? 'http://localhost:5173' }))
 
   app.use('/api/health', healthRouter)
+  app.use('/api/snailpay', snailpayRouter)
 
   return app
 }
