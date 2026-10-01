@@ -1,4 +1,7 @@
 import type { LoginForm, RegisterForm } from '../types/auth'
+import { MAX_RECHARGE_AMOUNT } from '../constants/snailpay'
+import type { RechargeForm } from '../types/snailpay'
+import { formatCurrency } from './format'
 
 export type FieldErrors<T> = Partial<Record<keyof T, string>>
 
@@ -66,6 +69,25 @@ export function validateLogin(form: LoginForm): FieldErrors<LoginForm> {
         email: validateEmail(form.email),
         password: form.password ? undefined : 'Escribe tu contraseña',
     }
+}
+
+export function validateRecharge(form: RechargeForm): FieldErrors<RechargeForm> {
+    return {
+        cardNumber: /^\d{16}$/.test(form.cardNumber.replace(/\s/g, '')) ? undefined : 'El número de tarjeta debe tener 16 dígitos',
+        expirationDate: /^(0[1-9]|1[0-2])\/\d{2}$/.test(form.expirationDate) ? undefined : 'Usa el formato MM/AA, por ejemplo 12/26',
+        cvv: /^\d{3}$/.test(form.cvv) ? undefined : 'El CVV tiene 3 dígitos',
+        cardholderName: form.cardholderName.trim() ? undefined : 'Escribe el nombre como aparece en la tarjeta',
+        amount: validateRechargeAmount(form.amount),
+    }
+}
+
+function validateRechargeAmount(value: string): string | undefined {
+    if (!value) return 'Escribe el monto a recargar'
+
+    const amount = Number(value)
+    if (!(amount > 0)) return 'El monto debe ser mayor a $0'
+    if (amount > MAX_RECHARGE_AMOUNT) return `El monto máximo por recarga es ${formatCurrency(MAX_RECHARGE_AMOUNT)}`
+    return undefined
 }
 
 export function hasErrors<T>(errors: FieldErrors<T>): boolean {

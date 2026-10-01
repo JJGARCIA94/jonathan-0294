@@ -1,6 +1,7 @@
 export const STORAGE_KEYS = {
     users: 'snail:users',
     session: 'snail:session',
+    charges: 'snail:charges',
 } as const
 
 export function readJson(key: string): unknown {
