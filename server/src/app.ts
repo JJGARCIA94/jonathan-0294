@@ -1,5 +1,6 @@
 import cors from 'cors'
 import express, { type Express } from 'express'
+import helmet from 'helmet'
 import { join, resolve } from 'node:path'
 import { healthRouter } from './routes/health.js'
 import { snailpayRouter } from './routes/snailpay.js'
@@ -7,7 +8,12 @@ import { snailpayRouter } from './routes/snailpay.js'
 export function createApp(): Express {
   const app = express()
 
-  app.disable('x-powered-by')
+  const trustProxyHops = Number(process.env.TRUST_PROXY_HOPS ?? 0)
+  if (trustProxyHops > 0) {
+    app.set('trust proxy', trustProxyHops)
+  }
+
+  app.use(helmet())
 
   app.use(cors({ origin: process.env.CLIENT_ORIGIN ?? 'http://localhost:5173' }))
 

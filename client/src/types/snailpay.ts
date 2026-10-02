@@ -13,6 +13,7 @@ export type ChargeStatusDetail =
     | 'bad_cvv'
     | 'insufficient_funds'
     | 'card_declined'
+    | 'too_many_requests'
     | 'service_unavailable'
     | 'processing_timeout'
     | 'internal_error'

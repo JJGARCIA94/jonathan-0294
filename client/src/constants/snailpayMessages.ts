@@ -13,6 +13,7 @@ export const CHARGE_MESSAGES: Record<ChargeStatusDetail, string> = {
     bad_cvv: 'El CVV no coincide con la tarjeta. Revisa los 3 dígitos del reverso.',
     insufficient_funds: 'La tarjeta no tiene fondos suficientes. Prueba con otra tarjeta o con un monto menor.',
     card_declined: 'El banco rechazó la tarjeta. Prueba con otra tarjeta.',
+    too_many_requests: 'Hiciste demasiados intentos seguidos. Espera un minuto e inténtalo de nuevo. No se hizo ningún cargo.',
     service_unavailable: 'SnailPay no está disponible en este momento. No se hizo ningún cargo; inténtalo más tarde.',
     processing_timeout: 'SnailPay no pudo procesar el pago a tiempo. No se hizo ningún cargo.',
     internal_error: 'Ocurrió un error en SnailPay. No se hizo ningún cargo.',

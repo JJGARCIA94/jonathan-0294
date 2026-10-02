@@ -114,6 +114,12 @@ const rejectionCases: { name: string; httpStatus: number; charge: Partial<Charge
         message: 'El CVV no coincide',
     },
     {
+        name: 'demasiados intentos',
+        httpStatus: 429,
+        charge: { status: 'rejected', status_detail: 'too_many_requests' },
+        message: 'demasiados intentos',
+    },
+    {
         name: 'SnailPay caído',
         httpStatus: 503,
         charge: { status: 'error', status_detail: 'service_unavailable' },

@@ -5,6 +5,7 @@ import { createApp } from '../src/app.js'
 vi.mock('../src/config/snailpay.js', async (importOriginal) => ({
     ...(await importOriginal<typeof import('../src/config/snailpay.js')>()),
     TIMEOUT_DELAY_MS: 50,
+    CHARGE_RATE_LIMIT: { windowMs: 60_000, max: 1000 },
 }))
 
 const app = createApp()
@@ -107,5 +108,8 @@ describe('seguridad', () => {
 
         expect(response.headers['x-powered-by']).toBeUndefined()
         expect(response.headers['access-control-allow-origin']).toBe('http://localhost:5173')
+        expect(response.headers['x-content-type-options']).toBe('nosniff')
+        expect(response.headers['x-frame-options']).toBe('SAMEORIGIN')
+        expect(response.headers['content-security-policy']).toContain("default-src 'self'")
     })
 })

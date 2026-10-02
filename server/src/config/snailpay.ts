@@ -10,3 +10,8 @@ export const TIMEOUT_CARD = '5000000000000017'
 
 export const MAX_AMOUNT = 50_000
 export const TIMEOUT_DELAY_MS = 15_000
+
+export const CHARGE_RATE_LIMIT = {
+    windowMs: 60_000,
+    max: 20,
+} as const
