@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import App from './App'
 import { logout, register } from './services/authService'
 
@@ -10,6 +10,10 @@ function renderAt(path: string) {
 }
 
 const AFTER_HASH = { timeout: 15_000 }
+
+beforeAll(async () => {
+  await import('./pages/DashboardPage')
+}, 60_000)
 
 describe('navegación y sesión', () => {
   it('sin sesión, el dashboard redirige al login', async () => {
