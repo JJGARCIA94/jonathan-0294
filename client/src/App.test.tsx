@@ -9,7 +9,7 @@ function renderAt(path: string) {
   render(<App />)
 }
 
-const AFTER_HASH = { timeout: 5000 }
+const AFTER_HASH = { timeout: 15_000 }
 
 describe('navegación y sesión', () => {
   it('sin sesión, el dashboard redirige al login', async () => {

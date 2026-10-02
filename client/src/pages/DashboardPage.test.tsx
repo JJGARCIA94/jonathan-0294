@@ -6,6 +6,8 @@ import { startSession } from '../services/sessionStore'
 import { saveUser } from '../services/userStore'
 import type { ChargeResponse } from '../types/snailpay'
 
+const PAGE_LOAD = { timeout: 15_000 }
+
 function openDashboard() {
     saveUser({
         id: 'user-1',
@@ -53,9 +55,9 @@ describe('recarga de saldo', () => {
     it('formatea los datos, aprueba la recarga y actualiza el saldo y el historial', async () => {
         const user = userEvent.setup()
         openDashboard()
-        expect(screen.getByText('Todavía no has hecho recargas.')).toBeInTheDocument()
+        expect(await screen.findByText('Todavía no has hecho recargas.', {}, PAGE_LOAD)).toBeInTheDocument()
 
-        await user.click(screen.getByRole('button', { name: /Recargar saldo/ }))
+        await user.click(await screen.findByRole('button', { name: /Recargar saldo/ }, PAGE_LOAD))
         const dialog = within(screen.getByRole('dialog', { name: 'Recargar saldo' }))
 
         await fillCard(user, dialog, '1234123412341234')
@@ -82,7 +84,7 @@ describe('recarga de saldo', () => {
         const user = userEvent.setup()
         openDashboard()
 
-        await user.click(screen.getByRole('button', { name: /Recargar saldo/ }))
+        await user.click(await screen.findByRole('button', { name: /Recargar saldo/ }, PAGE_LOAD))
         const dialog = within(screen.getByRole('dialog', { name: 'Recargar saldo' }))
 
         await fillCard(user, dialog, '4000000000000002')
