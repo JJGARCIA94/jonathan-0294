@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    name: ${{ matrix.project }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [client, server]
+
+    defaults:
+      run:
+        working-directory: ${{ matrix.project }}
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+
+      - name: Instalar Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: ${{ matrix.project }}/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Revisar tipos
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Pruebas
+        run: npm test
+
+      - name: Build
+        run: npm run build
