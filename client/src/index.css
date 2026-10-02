@@ -1,3 +1,76 @@
+:root {
+  --brand-night: #1e1b4b;
+  --brand: #6d28d9;
+  --brand-hover: #5b21b6;
+  --brand-active: #4c1d95;
+  --brand-gold: #f59e0b;
+  --brand-gold-light: #fbbf24;
+  --brand-surface: #f5f3ff;
+  --font-display: 'Poppins', system-ui, sans-serif;
+
+  --bs-primary: var(--brand);
+  --bs-primary-rgb: 109, 40, 217;
+  --bs-link-color: var(--brand);
+  --bs-link-color-rgb: 109, 40, 217;
+  --bs-link-hover-color: var(--brand-active);
+  --bs-link-hover-color-rgb: 76, 29, 149;
+  --bs-focus-ring-color: rgb(109 40 217 / 0.25);
+}
+
+body {
+  background-color: var(--brand-surface);
+}
+
+h1,
+h2,
+h3,
+.h3,
+.h4,
+.h5,
+.h6,
+.brand {
+  font-family: var(--font-display);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-bg: var(--brand-hover);
+  --bs-btn-hover-border-color: var(--brand-hover);
+  --bs-btn-active-bg: var(--brand-active);
+  --bs-btn-active-border-color: var(--brand-active);
+  --bs-btn-disabled-bg: var(--brand);
+  --bs-btn-disabled-border-color: var(--brand);
+  --bs-btn-focus-shadow-rgb: 109, 40, 217;
+}
+
+.form-control:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 0.25rem rgb(109 40 217 / 0.25);
+}
+
+.brand {
+  font-weight: 600;
+  color: var(--brand-gold-light);
+}
+
+.app-navbar {
+  background-color: var(--brand-night);
+}
+
+.auth-background {
+  background: radial-gradient(circle at top, #312e81, var(--brand-night) 70%);
+}
+
+.auth-tagline,
+.auth-footer {
+  color: rgb(255 255 255 / 0.75);
+}
+
+.auth-footer a {
+  color: var(--brand-gold-light);
+}
+
 .recharge-dialog {
   width: min(480px, calc(100% - 2rem));
   padding: 0;
@@ -7,7 +80,7 @@
 }
 
 .recharge-dialog::backdrop {
-  background-color: rgb(0 0 0 / 0.5);
+  background-color: rgb(30 27 75 / 0.6);
 }
 
 body:has(dialog[open]) {

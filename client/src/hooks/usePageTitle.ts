@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-
-const APP_NAME = 'Carreras de caracoles'
+import { APP_NAME } from '../constants/theme'
 
 export function usePageTitle(title: string) {
     useEffect(() => {

@@ -7,6 +7,7 @@ import { useAuth } from '../hooks/useAuth'
 import { AuthError } from '../services/authService'
 import type { LoginForm } from '../types/auth'
 import { hasErrors, validateLogin, type FieldErrors } from '../utils/validations'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const EMPTY_FORM: LoginForm = {
     email: '',
@@ -15,6 +16,7 @@ const EMPTY_FORM: LoginForm = {
 
 export function LoginPage() {
     const { login } = useAuth()
+    usePageTitle('Iniciar sesión')
     const [form, setForm] = useState<LoginForm>(EMPTY_FORM)
     const [wasSubmitted, setWasSubmitted] = useState(false)
     const [submitError, setSubmitError] = useState<string | null>(null)

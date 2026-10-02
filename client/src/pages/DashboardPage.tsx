@@ -12,6 +12,8 @@ import { useChargeHistory } from '../hooks/useChargeHistory'
 import { simulateRaceDay } from '../services/raceSimulation'
 import { formatCurrency } from '../utils/format'
 import { seedFromDate } from '../utils/random'
+import { usePageTitle } from '../hooks/usePageTitle'
+import { Brand } from '../components/Brand'
 
 const raceDay = simulateRaceDay(seedFromDate(new Date()))
 
@@ -19,6 +21,7 @@ export function DashboardPage() {
     const { user, logout } = useAuth()
     const [isRechargeOpen, setIsRechargeOpen] = useState(false)
     const { charges, reload: reloadCharges } = useChargeHistory(user?.id)
+    usePageTitle('Resumen')
 
     if (!user) return null
 
@@ -26,10 +29,12 @@ export function DashboardPage() {
 
     return (
         <>
-            <nav className="navbar bg-body border-bottom">
+            <nav className="navbar app-navbar">
                 <div className="container">
-                    <span className="navbar-brand fw-semibold">Carreras de caracoles</span>
-                    <button type="button" className="btn btn-outline-secondary btn-sm" onClick={logout}>
+                    <span className="navbar-brand">
+                        <Brand />
+                    </span>
+                    <button type="button" className="btn btn-outline-light btn-sm" onClick={logout}>
                         <i className="bi bi-box-arrow-right me-1" aria-hidden="true" />
                         Cerrar sesión
                     </button>

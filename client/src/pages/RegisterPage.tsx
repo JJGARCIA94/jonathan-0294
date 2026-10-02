@@ -6,6 +6,7 @@ import { useAuth } from '../hooks/useAuth'
 import { AuthError } from '../services/authService'
 import type { RegisterForm } from '../types/auth'
 import { hasErrors, PASSWORD_HINT, validateRegister, type FieldErrors } from '../utils/validations'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const EMPTY_FORM: RegisterForm = {
     fullName: '',
@@ -16,6 +17,7 @@ const EMPTY_FORM: RegisterForm = {
 
 export function RegisterPage() {
     const { register } = useAuth()
+    usePageTitle('Crear cuenta')
     const [form, setForm] = useState<RegisterForm>(EMPTY_FORM)
     const [wasSubmitted, setWasSubmitted] = useState(false)
     const [submitError, setSubmitError] = useState<string | null>(null)

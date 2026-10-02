@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import App from '../App'
 import { startSession } from '../services/sessionStore'
 import { saveUser } from '../services/userStore'
@@ -46,6 +46,10 @@ async function fillCard(user: ReturnType<typeof userEvent.setup>, dialog: Return
     await user.type(dialog.getByLabelText('Vencimiento'), '1226')
     await user.type(dialog.getByLabelText('CVV'), '543')
 }
+
+beforeAll(async () => {
+    await import('./DashboardPage')
+}, 60_000)
 
 afterEach(() => {
     vi.unstubAllGlobals()
